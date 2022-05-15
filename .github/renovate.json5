@@ -1,0 +1,230 @@
+{
+  /*
+   * Repo default branch
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#basebranches
+   */
+  baseBranches: ['main'],
+
+  /*
+   * Creates an GitHub issue, that is used to
+   * keep track of Renovate updates.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#dependencydashboard
+   */
+  dependencyDashboard: true,
+
+  /*
+   * Enable Renovate Bot on the repo.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#enabled
+   */
+  enabled: true,
+
+  /*
+   * Extend configuration presets.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#extends
+   * @link Shareable Config Presets - https://docs.renovatebot.com/config-presets/
+   */
+  extends: [
+    'config:base',
+    ':semanticCommits',
+    'helpers:pinGitHubActionDigests',
+  ],
+
+  /*
+   * Labels to apply to Pull Requests
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#labels
+   */
+  labels: ['bot', 'dependencies', 'renovate'],
+
+  /*
+   * Node version support policy.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#supportPolicy
+   */
+  node: {
+    supportPolicy: 'lts_latest',
+  },
+
+  /*
+   * Rules for different packages.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#packagerules
+   */
+  packageRules: [
+    /*
+     * ================================
+     *
+     * Labels
+     *
+     * Apply labels to pull requests depending on the
+     * packages that are being updated.
+     *
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#labels
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#matchpackagepatterns
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#matchPaths
+     *
+     * ================================
+     */
+    {
+      labels: ['github-actions'],
+      matchPaths: ['.github/workflows/**/*.*'],
+    },
+    {
+      labels: ['version-major'],
+      matchUpdateTypes: ['major'],
+    },
+    {
+      labels: ['version-minor'],
+      matchUpdateTypes: ['minor'],
+    },
+    {
+      labels: ['version-patch'],
+      matchUpdateTypes: ['patch'],
+    },
+    {
+      labels: ['version-pin'],
+      matchUpdateTypes: ['pin'],
+    },
+
+    /*
+     * ================================
+     *
+     * Semantic Versioning
+     *
+     * Peer dependencies bump the range even if the new
+     * version satisfies the existing range,
+     * e.g. ^1.0.0 -> ^1.1.0
+     *
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#rangestrategy
+     *
+     * ================================
+     */
+    {
+      matchDepTypes: ['peerDependencies'],
+      rangeStrategy: 'bump',
+    },
+
+    /*
+     * ================================
+     *
+     * Group packages into branches and pull requests
+     *
+     * Often there are packages - such as `eslint` - where
+     * packages often need to be updated togeather.
+     * These group patterns will result in a single pull request
+     * being opended for all eslint package updates.
+     *
+     * This is essential for node packages from `NPM` which
+     * can be unpublished within 3 days, of a release.
+     *
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#groupName
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#matchPackageNames
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#matchPackagePatterns
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#matchPaths
+     *
+     * ================================
+     */
+    
+
+    /*
+     * ================================
+     *
+     * Let Renovate automerge some updates, without
+     * human intervention.
+     *
+     * Renovate will only automerge a pull request when
+     * status checks have completed successfully.
+     *
+     * Renovate will not automerge if a pull request has
+     * a negative review outstanding.
+     *
+     * Warning: Don't enable this for major updates.
+     *
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#automerge
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#automergeStrategy
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#labels
+     * @link Documentation - https://docs.renovatebot.com/configuration-options/#matchUpdateTypes
+     *
+     * ================================
+     */
+    {
+      automerge: true,
+      automergeStrategy: 'squash',
+      labels: ['automated'],
+      matchUpdateTypes: ['minor', 'patch'],
+    },
+  ],
+
+  /*
+   * Limit the number of concurrent branches and
+   * pull requests created by Renovate.
+   *
+   * This helps to reduce the noise of created
+   * pull requests.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#prconcurrentlimit
+   */
+  prConcurrentLimit: 4,
+
+  /*
+   * Wait until status checks have completed before
+   * Renovate creates a pull request.
+   *
+   * This helps to reduce the noise of created
+   * pull requests.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#prcreation
+   */
+  prCreation: 'not-pending',
+
+  /*
+   * Rate limit hour many pull requests are opened
+   * by Renovate within an hour.
+   *
+   * This helps to reduce the noise of created
+   * pull requests.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#prhourlylimit
+   */
+  prHourlyLimit: 2,
+
+  /*
+   * Policy for how to modify/update existing
+   * version ranges.
+   *
+   * `auto` lets Renovate decide.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#rangestrategy
+   */
+  rangeStrategy: 'auto',
+
+  /*
+   * Times of day/week to limit when Renovate
+   * can create branches and pull requests.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#schedule
+   */
+  schedule: ['after 11pm', 'before 6am'],
+
+  /*
+   * Number of days required to have passed before
+   * a package update is considered to be stable.
+   *
+   * This is essential for node packages from `NPM` which
+   * can be unpublished within 3 days, of a release.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#stabilitydays
+   */
+  stabilityDays: 5,
+
+  /*
+   * Timezone used for schedule settings.
+   *
+   * @link Documentation - https://docs.renovatebot.com/configuration-options/#timezone
+   */
+  timezone: 'Europe/London',
+}
