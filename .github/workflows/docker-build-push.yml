@@ -16,18 +16,18 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
 
       - name: Set up QEMU
         id: qemu
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # tag=v2
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6 # tag=v2
 
       - name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09 # tag=v3
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-docker-buildx-${{ github.sha }}
@@ -36,7 +36,7 @@ jobs:
 
       - name: Set Docker image metadata
         id: docker_meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a # tag=v4
         with:
           images: domjtalbot/volta,ghcr.io/domjtalbot/volta
           flavor: |
@@ -49,7 +49,7 @@ jobs:
 
       - name: Log in to Docker Hub
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v2
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # tag=v2
         with:
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -57,14 +57,14 @@ jobs:
 
       - name: Log in to GitHub Container Registry
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v2
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # tag=v2
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@e551b19e49efd4e98792db7592c17c09b89db8d8 # tag=v3
         with:
           context: .
           file: ./Dockerfile
