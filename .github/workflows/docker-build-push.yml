@@ -29,7 +29,7 @@ jobs:
       - name: Is this the latest image?
         id: latest
         run: |
-          echo ::set-output name=islatest::${{ endsWith(matrix.debianVersion, bullseye) }}
+          echo ::set-output name=islatest::${{ endsWith(matrix.debianVersion, 'bullseye') }}
 
       - name: Set up QEMU
         id: qemu
