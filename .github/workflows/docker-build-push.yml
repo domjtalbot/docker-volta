@@ -53,7 +53,7 @@ jobs:
         with:
           images: domjtalbot/volta,ghcr.io/domjtalbot/volta
           flavor: |
-            latest=${{ steps.latest.islatest }}
+            latest=${{ steps.latest.outputs.islatest }}
           tags: |
             ${{ matrix.debianVersion }}
             current-${{ matrix.debianVersion }}
