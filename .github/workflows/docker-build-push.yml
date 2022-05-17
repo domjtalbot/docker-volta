@@ -21,6 +21,11 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
 
+      - name: Get Volta version
+        id: volta
+        run: |
+          echo ::set-output name=version::$(< volta.version)
+
       - name: Set up QEMU
         id: qemu
         uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # tag=v2
@@ -47,8 +52,10 @@ jobs:
           tags: |
             ${{ matrix.debianVersion }}
             current-${{ matrix.debianVersion }}
+            ${{ steps.volta.outputs.version }}-${{ matrix.debianVersion }}
           labels: |
-            org.opencontainers.image.version=${{ matrix.debianVersion }}
+            org.opencontainers.image.version=
+            current-${{ steps.volta.outputs.version }}-${{ matrix.debianVersion }}
 
       - name: Log in to Docker Hub
         if: github.event_name != 'pull_request'
@@ -74,6 +81,7 @@ jobs:
           platforms: linux/amd64
           build-args: |
             DEBIAN_VERSION=${{ matrix.debianVersion }}
+            VERSION=${{ steps.volta.outputs.version }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
