@@ -45,7 +45,7 @@ jobs:
       - name: Is this the latest image?
         id: latest
         run: |
-          echo ::set-output name=islatest::${{ matrix.os == "bullseye" }}
+          echo ::set-output name=islatest::$(${{ matrix.os == 'bullseye' }})
 
       - name: Set Docker image metadata
         id: docker_meta
