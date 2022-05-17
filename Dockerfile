@@ -2,23 +2,32 @@
 # Volta
 ###########################################################
 
-FROM debian:stable-slim
+# The version of Volta to install.
+# (Defaults to latest)
+ARG DEBIAN_VERSION=bullseye-slim
 
-RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
-    && case "${dpkgArch##*-}" in \
-      amd64) ARCH='x64';; \
-      ppc64el) ARCH='ppc64le';; \
-      s390x) ARCH='s390x';; \
-      arm64) ARCH='arm64';; \
-      armhf) ARCH='armv7l';; \
-      i386) ARCH='x86';; \
-      *) echo "unsupported architecture"; exit 1 ;; \
-    esac \
-    && set -ex \
-    # libatomic1 for arm
-    && apt-get update \
-    && apt-get install -y ca-certificates curl --no-install-recommends \
+FROM debian:$DEBIAN_VERSION
+
+# The version of Volta to install.
+# (Defaults to latest)
+ARG VERSION=latest
+
+ENV VOLTA_VERSION $VERSION
+
+RUN \
+    # Update packages
+    apt-get update \
+    #
+    # Install package dependencies
+    && apt-get install -y \
+    ca-certificates \
+    curl \
+    --no-install-recommends \
+    #
+    # Remove package lists
     && rm -rf /var/lib/apt/lists/* \
+    #
+    # Remove recommended packages to reduce image
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
 SHELL ["/bin/bash", "-c"]
@@ -27,4 +36,14 @@ ENV BASH_ENV ~/.bashrc
 ENV VOLTA_HOME /root/.volta
 ENV PATH $VOLTA_HOME/bin:$PATH
 
-RUN curl https://get.volta.sh | bash
+RUN \
+  # Install Volta
+  if [ "$VERSION" = "latest" ]; \
+  then \
+  curl https://get.volta.sh | bash; \
+  else \
+  curl https://get.volta.sh | bash -s -- --version $VERSION; \
+  fi \
+  # Test install
+  && ls -l ~/.volta/bin \
+  && volta --version
