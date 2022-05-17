@@ -1,0 +1,44 @@
+name: Update Volta
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-volta:
+    name: Update volta
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch latest volta release
+        id: volta
+        run: |
+          echo ::set-output name=release_tag::$(curl -sL https://api.github.com/repos/volta-cli/volta/releases/latest | jq -r ".tag_name")
+          echo ::set-output name=current_tag::$(< volta.version)
+
+      - name: Update volta version
+        if: steps.volta.outputs.current_tag != steps.volta.outputs.release_tag
+        run: |
+          echo ${{ steps.volta.outputs.release_tag }} > volta.version
+
+      - name: Create pull request
+        if: steps.volta.outputs.current_tag != steps.volta.outputs.release_tag
+        uses: peter-evans/create-pull-request@v4
+        with:
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          commit-message: Update volta from ${{ steps.volta.outputs.current_tag }} to ${{ steps.volta.outputs.release_tag }}
+          title: Update volta from ${{ steps.volta.outputs.current_tag }} to ${{ steps.volta.outputs.release_tag }}
+          body: |
+            Updates [volta-cli/volta](https://github.com/adnanh/volta) from ${{ steps.volta.outputs.current_tag }} to ${{ steps.volta.outputs.release_tag }}
+          labels: |
+            bot
+          branch: volta-cli/volta-${{ steps.volta.outputs.release_tag }}
+          delete-branch: true
+          
