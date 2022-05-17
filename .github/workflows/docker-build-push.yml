@@ -10,9 +10,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-push:
+  build-push-debian:
     name: Build & Push
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        debianVersion: [bullseye, bullseye-slim, buster, buster-slim, stretch-slim, stretch, bookworm, bookworm-slim] 
 
     steps:
       - name: Check out repository
@@ -40,12 +43,12 @@ jobs:
         with:
           images: domjtalbot/volta,ghcr.io/domjtalbot/volta
           flavor: |
-            latest=true
+            latest=false
           tags: |
-            latest
-            stable:slim
+            ${{ matrix.debianVersion }}
+            current-${{ matrix.debianVersion }}
           labels: |
-            org.opencontainers.image.version=latest
+            org.opencontainers.image.version=${{ matrix.debianVersion }}
 
       - name: Log in to Docker Hub
         if: github.event_name != 'pull_request'
@@ -69,6 +72,8 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64
+          build-args: |
+            DEBIAN_VERSION=${{ matrix.debianVersion }},
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
