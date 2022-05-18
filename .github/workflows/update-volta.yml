@@ -2,8 +2,8 @@ name: Update Volta
 
 on:
   push:
-    # branches:
-    #   - main
+    branches:
+      - main
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
