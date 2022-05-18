@@ -2,8 +2,8 @@ name: Update Volta
 
 on:
   push:
-    branches:
-      - main
+    # branches:
+    #   - main
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
@@ -19,7 +19,9 @@ jobs:
       - name: Fetch latest volta release
         id: volta
         run: |
-          echo ::set-output name=release_tag::$(curl -sL https://api.github.com/repos/volta-cli/volta/releases/latest | jq -r ".tag_name")
+          voltaTag=$(curl -sL https://api.github.com/repos/volta-cli/volta/releases/latest | jq -r ".tag_name")
+          voltaVersion=${$voltaTag%?}
+          echo ::set-output name=release_tag::$voltaVersion
           echo ::set-output name=current_tag::$(< volta.version)
 
       - name: Update volta version
