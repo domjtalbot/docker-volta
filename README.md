@@ -2,7 +2,7 @@
 
 <h1 align="center">Volta</h1>
 
-<p align="center">⚡ A Docker image for Volta</p>
+<p align="center">⚡ A Docker image for <a href="https://volta.sh">Volta</a>, the Hassle-Free JavaScript Tool Manager.</p>
 
 <div align="center">
   <p dir="auto">
@@ -14,7 +14,6 @@
     </a>
   </p>
 </div>
-
 
 <br/>
 
@@ -36,7 +35,6 @@ RUN volta setup
 CMD node --version && yarn --version
 ```
 
- 
 <br/>
 
 ## Image Versions
@@ -66,6 +64,7 @@ This image is based on [version 9 of Debian](https://www.debian.org/releases/str
 Each Debian version supports the slim variant. These images only contain the minimal packages required for running Debian and Volta.
 
 For example:
+
 - `volta:bookworm-slim`
 
 ### `volta:<volta-version>`
@@ -73,6 +72,7 @@ For example:
 These images allow you to define [the version of Volta]((https://github.com/volta-cli/volta/releases) used. The image is based on [version 11 of Debian](https://www.debian.org/releases/bullseye/).
 
 For example:
+
 - `volta:1.7.0`
 
 ### `volta:<volta-version>-<debian-version>`
@@ -80,9 +80,9 @@ For example:
 These images allow you to define [the version of Volta]((https://github.com/volta-cli/volta/releases) and [Debian](https://www.debian.org/releases/bullseye/) used.
 
 For example:
+
 - `volta:1.7.0-bookworm`
 - `volta:1.7.0-bookworm-slim`
-
 
 <br/>
 
@@ -93,3 +93,6 @@ View the [license for Votla](https://github.com/volta-cli/volta/blob/main/LICENS
 As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
 
 <br/>
+
+<div align="center">
+<small>⚡ ♥ 🐳</small></div>
