@@ -2,9 +2,9 @@
 # Volta 
 # ---------------------------------------------------------
 
-# The version of Volta to install.
-# (Defaults to latest)
-ARG DEBIAN_VERSION=bullseye-slim
+# The version of Debian to use.
+# (Defaults to bullseye)
+ARG DEBIAN_VERSION=bullseye
 
 FROM debian:$DEBIAN_VERSION
 
