@@ -73,7 +73,7 @@ These images allow you to define [the version of Volta]((https://github.com/volt
 
 For example:
 
-- `volta:1.7.0`
+- `volta:1.0.7`
 
 ### `volta:<volta-version>-<debian-version>`
 
@@ -81,8 +81,8 @@ These images allow you to define [the version of Volta]((https://github.com/volt
 
 For example:
 
-- `volta:1.7.0-bookworm`
-- `volta:1.7.0-bookworm-slim`
+- `volta:1.0.7-bookworm`
+- `volta:1.0.7-bookworm-slim`
 
 <br/>
 
