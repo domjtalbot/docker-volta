@@ -93,6 +93,8 @@ View the [license for Votla](https://github.com/volta-cli/volta/blob/main/LICENS
 As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
 
 <br/>
+<br/>
 
-<div align="center">
-<small>⚡ ♥ 🐳</small></div>
+<p align="center">⚡ ♥ 🐳</p>
+
+<br/>
