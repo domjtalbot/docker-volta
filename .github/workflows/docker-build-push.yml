@@ -4,15 +4,23 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '.github/workflows/docker-build-push.yml'
+      - 'Dockerfile'
+      - 'volta.version'
   pull_request:
     branches:
       - main
+    paths:
+      - '.github/workflows/docker-build-push.yml'
+      - 'Dockerfile'
+      - 'volta.version'
   workflow_dispatch:
 
 concurrency: 
   group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
-  
+
 jobs:
   build-push-debian:
     name: Build & Push
