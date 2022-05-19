@@ -29,16 +29,26 @@ jobs:
       - name: Fetch latest volta release
         id: volta
         run: |
+          # Get the latest tag from GitHub
           voltaTag=$(curl -sL https://api.github.com/repos/volta-cli/volta/releases/latest | jq -r ".tag_name")
+
+          # Remove the `v` prefix from the tag
           voltaVersion=${voltaTag:1}
+
+          # Store the latest version
           echo ::set-output name=release_tag::$voltaVersion
+
+          # Get the current version stored in volta.version
           echo ::set-output name=current_tag::$(< volta.version)
 
+      # If the version of volta has updated, save it to volta.version
       - name: Update volta version
         if: steps.volta.outputs.current_tag != steps.volta.outputs.release_tag
         run: |
           echo ${{ steps.volta.outputs.release_tag }} > volta.version
 
+      # If the version of volta has updated, open a pull request to
+      # update the version used in Docker.
       - name: Create pull request
         if: steps.volta.outputs.current_tag != steps.volta.outputs.release_tag
         uses: peter-evans/create-pull-request@f094b77505fb89581e68a1163fbd2fffece39da1 # tag=v4
