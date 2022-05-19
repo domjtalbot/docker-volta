@@ -4,8 +4,14 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '.github/workflows/update-volta.yml'
+      - 'volta.version'
+
   schedule:
+    # Checkout for updates daily at midnight
     - cron: '0 0 * * *'
+  
   workflow_dispatch:
 
 concurrency: 
