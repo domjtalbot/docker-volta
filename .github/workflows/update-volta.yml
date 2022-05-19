@@ -103,4 +103,5 @@ jobs:
           add-paths: |
             volta.version
           delete-branch: true
+          token: ${{ secrets.GH_AUTH }}
           
