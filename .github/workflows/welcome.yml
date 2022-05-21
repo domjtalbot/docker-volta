@@ -1,4 +1,4 @@
-name: "Welcome :wave:"
+name: Welcome 👋
 
 permissions:
   issues: write
@@ -14,11 +14,11 @@ jobs:
   welcome:
     runs-on: ubuntu-20.04
     steps:
-      - name: "Welcome :wave:"
+      - name: "Welcome 👋"
         uses: actions/first-interaction@v1.1.0
         with:
           issue-message: |
-            Welcome, ${{github.actor}}! :wave:
+            Welcome, ${{github.actor}}! 👋
             Thanks for submitting your first issue! :rocket:
           pr-message: |
             Welcome, ${{github.actor}}! :wave:
