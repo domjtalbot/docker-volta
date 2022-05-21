@@ -1,0 +1,32 @@
+# =========================================================
+#
+# Config used by the Auto Label workflow.
+#
+# Defines which labels should be applied to a pull request.
+#
+# =========================================================
+
+docker:
+- 'Dockerfile'
+
+documentation:
+- '**/*.md'
+
+git:
+- '.gitattributes'
+- '.gitignore'
+
+'github actions':
+- '.github/workflows/**/*.yml'
+
+legal:
+- 'LICENSE'
+
+renovate:
+- '.github/renovate.json5'
+
+volta:
+- 'volta.version'
+
+vscode:
+- '.vscode/**/*'
