@@ -1,0 +1,40 @@
+name: Sync labels
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/labels.yml
+      - .github/workflows/sync-labels.yml
+
+  schedule:
+    # Checkout for updates daily at midnight
+    - cron: '0 0 * * *'
+  
+  workflow_dispatch:
+    inputs:
+      prune:
+        type: boolean
+        description: 'Remove labels which are not defined in the labels config?'
+        required: false
+        default: false
+
+concurrency: 
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  sync-labels:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
+
+      - name: Sync Labels
+        uses: micnncim/action-label-syncer@3abd5ab72fda571e69fffd97bd4e0033dd5f495c # tag=v1.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          manifest: .github/labels.yml
+          prune: ${{ github.event.inputs.prune == true }}
