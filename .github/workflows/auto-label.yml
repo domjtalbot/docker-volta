@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Auto Label
-        uses: actions/labeler@v4.0.0
+        uses: actions/labeler@9fd24f1f9d6ceb64ba34d181b329ee72f99978a0 # tag=v4.0.0
         with:
           configuration-path: .github/auto-label.yml
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
