@@ -89,7 +89,7 @@ jobs:
 
             📅 **Schedule**: Daily at midnight UTC.
 
-            🚦 **Automerge**: Disabled.
+            🚦 **Automerge**: Enabled. This pull request will be automatically merged once status checks have passed.
 
             ---
 
@@ -99,6 +99,7 @@ jobs:
             domjtalbot
           labels: |
             bot
+            automerge
           branch: feature/volta-${{ steps.volta.outputs.release_tag }}
           add-paths: |
             volta.version
