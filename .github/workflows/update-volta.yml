@@ -57,7 +57,7 @@ jobs:
       # update the version used in Docker.
       - name: Create pull request
         if: steps.volta.outputs.current_tag != steps.volta.outputs.release_tag
-        uses: peter-evans/create-pull-request@f094b77505fb89581e68a1163fbd2fffece39da1 # tag=v4
+        uses: peter-evans/create-pull-request@923ad837f191474af6b1721408744feb989a4c27 # tag=v4
         with:
           title: Update Volta from `v${{ steps.volta.outputs.current_tag }}` to `v${{ steps.volta.outputs.release_tag }}`
           commit-message: "feat(`volta.version`): update Volta from ${{ steps.volta.outputs.current_tag }} to ${{ steps.volta.outputs.release_tag }}"
