@@ -40,7 +40,7 @@ jobs:
       # Enable tmate debugging of manually-triggered workflows
       # if the input option was provided.
       - name: Setup SSH debug session
-        uses: mxschmitt/action-tmate@8b4e4ac71822ed7e0ad5fb3d1c33483e9e8fb270 # tag=v3
+        uses: mxschmitt/action-tmate@a283f9441d2d96eb62436dc46d7014f5d357ac22 # v3
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
 
       - name: Check out repository
